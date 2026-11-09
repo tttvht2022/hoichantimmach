@@ -39,7 +39,7 @@ function tile(h,t,d,g){return `<a class="tile" href="${h}"><b>${t}</b><span>${d}
 /* ---------- mWHO 2.0 ---------- */
 PAGES['/tk/mwho']={title:'mWHO 2.0',render(m){
   const groups=[...new Set(MWHO_DX.map(d=>d[0]))];
-  m.innerHTML=head('ESC 2025 · Bảng 6','Phân loại mWHO 2.0 và Pregnancy Heart Team',`Chọn mọi tình trạng của bệnh nhân. Nhóm mWHO 2.0 lấy theo tình trạng nặng nhất. CARPREG II giúp cá thể hóa nguy cơ trong từng nhóm. ${P('Bảng 6','4477–4479')}`)+`<div>${FIG('ESC25','Bảng 6','4477')}</div>`+
+  m.innerHTML=head('ESC 2025 · Bảng 6','Phân loại mWHO 2.0 và Pregnancy Heart Team',`Chọn mọi tình trạng của bệnh nhân. Nhóm mWHO 2.0 lấy theo tình trạng nặng nhất. CARPREG II giúp cá thể hóa nguy cơ trong từng nhóm. ${P('Bảng 6','4477–4479')}`)+
   `<div class="grid2"><div class="stack">
     <div class="panel stack"><h3>Tình trạng tim mạch</h3><input type="search" id="mw-q" placeholder="Lọc: Fontan, Marfan, hẹp hai lá…" aria-label="Lọc tình trạng">
      <div id="mw-list" class="stack" style="max-height:520px;overflow:auto"></div></div>
@@ -131,7 +131,7 @@ PAGES['/tk/cap-cuu']={title:'Cấp cứu',render(m){
   let cur=(location.hash.split('?a=')[1])||'arrest';
   m.innerHTML=head('ESC 2025 · Thuật toán cấp cứu','Thuật toán cấp cứu trong thai kỳ','Chọn tình huống. Mỗi ô ghi class khuyến cáo; nguồn ở cuối thuật toán.')+
   `<div class="filters" id="al-chips">${Object.entries(ALG).map(([k,v])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${k===cur}">${v[0]}</button>`).join('')}</div><div class="panel stack" id="al-body"></div>`;
-  const draw=()=>{const a=ALG[cur];$('al-body').innerHTML=`<span class="eyebrow">ESC 2025 · ${a[1]} · tr. ${a[2]}</span><div class="row" style="justify-content:space-between"><h2>${a[0]}</h2>${FIG('ESC25',a[1].split('–')[0],a[2])}</div><div class="algo">${a[3]()}</div>`};
+  const draw=()=>{const a=ALG[cur];$('al-body').innerHTML=`<span class="eyebrow">ESC 2025 · ${a[1]} · tr. ${a[2]}</span><h2>${a[0]}</h2><div class="algo">${a[3]()}</div>`};
   $('al-chips').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;cur=b.dataset.k;$('al-chips').querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));draw()};
   draw();
 }};
@@ -139,7 +139,7 @@ PAGES['/tk/cap-cuu']={title:'Cấp cứu',render(m){
 /* ---------- Thuốc ---------- */
 PAGES['/tk/thuoc']={title:'Thuốc trong thai kỳ',render(m){
   let mode='p', cat='all';
-  m.innerHTML=head('ESC 2025 · Hình 6','Chọn thuốc trong thai kỳ và cho con bú',`Ba mức theo Hình 6: <span class="cb c1">++</span> lựa chọn đầu tay/an toàn nhất, <span class="cb c2a">+−</span> lựa chọn hai, <span class="cb c3">×</span> có bằng chứng độc tính cho thai/trẻ hoặc không có dữ liệu an toàn. ${P('Hình 6','4494')}`)+`<div>${FIG('ESC25','Hình 6','4494')}</div>`+
+  m.innerHTML=head('ESC 2025 · Hình 6','Chọn thuốc trong thai kỳ và cho con bú',`Ba mức theo Hình 6: <span class="cb c1">++</span> lựa chọn đầu tay/an toàn nhất, <span class="cb c2a">+−</span> lựa chọn hai, <span class="cb c3">×</span> có bằng chứng độc tính cho thai/trẻ hoặc không có dữ liệu an toàn. ${P('Hình 6','4494')}`)+
   `<div class="filters"><button type="button" class="chip" id="md-p" aria-pressed="true">Thai kỳ</button><button type="button" class="chip" id="md-l" aria-pressed="false">Cho con bú</button><input type="search" id="dq" placeholder="Tìm thuốc: amiodarone, enalapril, nifedipine…" aria-label="Tìm thuốc"></div>
   <div class="filters" id="dc">${[['all','Tất cả'],...DRUGP.map((d,i)=>[String(i),d[0]])].map(([k,n])=>`<button type="button" class="chip" data-k="${k}" aria-pressed="${k==='all'}">${n}</button>`).join('')}</div>
   <div id="dl" class="stack"></div>

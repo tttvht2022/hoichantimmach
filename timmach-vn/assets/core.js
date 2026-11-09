@@ -10,30 +10,22 @@ window.escH=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;
 window.C=function(g,loc,p){
   const r=REFS[g]; if(!r) return '';
   const label=[r.short,loc,p?('tr. '+p):''].filter(Boolean).join(' · ');
-  const fig=/^(Hình|Bảng|Fig|Table)/.test(loc||'');
-  return `<button type="button" class="cite${fig?' fig':''}" data-g="${g}" data-loc="${escH(loc||'')}" data-p="${escH(p||'')}">${escH(label)}</button>`;
+  return `<button type="button" class="cite" data-g="${g}" data-loc="${escH(loc||'')}" data-p="${escH(p||'')}">${escH(label)}</button>`;
 };
-/** Nút mở hình/bảng nguyên bản trong PDF của người dùng */
-window.FIG=function(g,loc,p){const pg=window.PDFV&&PDFV.page(g,p);return pg?`<button type="button" class="btn ghost figbtn" data-pdf="${g}" data-pg="${pg}" data-loc="${escH(loc)}">Xem ${escH(loc)} nguyên bản</button>`:''};
 /** Nhiều trích dẫn: [[g,loc,p],...] */
 window.CS=function(list){return (list||[]).map(x=>C(x[0],x[1],x[2])).join(' ')};
 window.store={get(k,d){try{const v=localStorage.getItem('hct-'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('hct-'+k,JSON.stringify(v))}catch(e){}}};
 
 /* ---------- Modal ---------- */
 function openModal(html){$('modal-body').innerHTML=html;$('modal').hidden=false;$('modal-x').focus()}
-function closeModal(){$('modal').hidden=true;$('modal').querySelector('.modal-card').classList.remove('wide')}
+function closeModal(){$('modal').hidden=true}
 window.openModal=openModal;
 document.addEventListener('click',e=>{
-  const pb=e.target.closest('[data-pdf]');
-  if(pb){e.preventDefault();PDFV.open(pb.dataset.pdf,+pb.dataset.pg,pb.dataset.loc||'');return}
   const c=e.target.closest('.cite');
   if(c){const r=REFS[c.dataset.g];if(!r)return;
-    const pg=PDFV.page(c.dataset.g,c.dataset.p);
-    $('modal').querySelector('.modal-card').classList.remove('wide');
     openModal(`<span class="eyebrow">Trích dẫn</span><h3 id="modal-title">${escH(r.short)}${c.dataset.loc?' · '+escH(c.dataset.loc):''}${c.dataset.p?' · trang '+escH(c.dataset.p):''}</h3>
       <p>${escH(r.full)}</p><p class="note">${escH(r.note||'')}</p>
-      ${pg?`<div class="row"><button type="button" class="btn" data-pdf="${c.dataset.g}" data-pg="${pg}" data-loc="${escH(c.dataset.loc||'')}">Xem trang gốc${c.dataset.loc?' · '+escH(c.dataset.loc):''}</button><span class="note">Hiển thị nguyên trang từ file PDF bạn đã có, không cắt, không chỉnh sửa.</span></div>`:''}
-      ${r.doi?`<p><a href="https://doi.org/${r.doi}" target="_blank" rel="noopener">Mở văn bản gốc trên trang nhà xuất bản (doi:${r.doi})</a></p>`:''}`);return}
+      ${r.doi?`<p><a href="https://doi.org/${r.doi}" target="_blank" rel="noopener">Mở văn bản gốc (doi:${r.doi})</a></p>`:''}`);return}
   if(e.target.id==='modal'||e.target.id==='modal-x')closeModal();
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modal').hidden)closeModal()});
@@ -68,7 +60,6 @@ function route(){
   $('mainnav').innerHTML=navHtml(NAV.main,sec?'/'+sec:path);
   $('subnav').innerHTML=sec?navHtml(NAV[sec],path):'';
   document.title=(pg.title&&path!=='/'?pg.title+' · ':'')+'Hội Chẩn Tim';
-  if(!$('modal').hidden)closeModal();
   const m=$('main');m.innerHTML='';pg.render(m);
   if(!route.first){m.focus({preventScroll:true});window.scrollTo(0,0)}route.first=false;
 }

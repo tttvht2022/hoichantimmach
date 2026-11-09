@@ -151,7 +151,7 @@ function assist(){
    <div style="overflow-x:auto"><table class="bpgrid"><thead><tr><th></th><th>Tiền THA</th><th>Độ 1</th><th>Độ 2</th></tr></thead><tbody>
    ${RISKM.map((r,i)=>`<tr><th style="text-align:left">${rowN[i]}</th>${r.map((c,j)=>`<td class="${rkc(c)}${i===row&&j===colI?' hit':''}">${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
    ${risk?`<p>Nguy cơ tim mạch: <b>${risk}</b>${prev!=null?` · PREVENT ${prev}% (${prev>=7.5?'≥7,5%: nhóm nguy cơ tăng':prev>=5?'5–7,5%: trung bình':'&lt;5%'}) ${V('PREVENT-CVD','37')}`:''}.</p>`:`<p class="note">HA chưa đến ngưỡng tiền THA: không áp dụng bảng.</p>`}
-   ${prev==null&&risk?`<div>${FIG('VSH26','Hình 7.2','34')}</div><p class="note">Có thể tính PREVENT-CVD để định lượng nguy cơ ${B('I','C-EO')} ${T('7.4')}.</p>`:''}</div>`);
+   ${prev==null&&risk?`<p class="note">Có thể tính PREVENT-CVD để định lượng nguy cơ ${B('I','C-EO')} ${T('7.4')}.</p>`:''}</div>`);
   /* 3. Quyết định khởi trị */
   const thr130=f.dm||f.cad||f.mi||(ckd&&uacr!=null&&uacr>=30);
   let dec='',decCls='',decMono=false;
@@ -290,10 +290,10 @@ PAGES['/tha/chan-doan']={title:'Chẩn đoán THA',render(m){
     <label class="field"><span>HAPK</span><input id="dx-o" placeholder="ví dụ 148/92"></label>
     <label class="field"><span>HATN trung bình</span><input id="dx-h" placeholder="ví dụ 128/80"></label></div>
     <div id="dx-out" class="stack" aria-live="polite"></div></div>
-   <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Ngưỡng theo phương pháp đo ${V('Bảng 4.2','15')}</h3>${FIG('VSH26','Bảng 4.2','15')}</div><div style="overflow-x:auto"><table class="bpgrid" id="dx-tab"><thead><tr><th>Phân loại</th>${Object.values(BPTH).map(v=>`<th>${v.n}</th>`).join('')}</tr></thead><tbody>
+   <div class="panel stack"><h3>Ngưỡng theo phương pháp đo ${V('Bảng 4.2','15')}</h3><div style="overflow-x:auto"><table class="bpgrid" id="dx-tab"><thead><tr><th>Phân loại</th>${Object.values(BPTH).map(v=>`<th>${v.n}</th>`).join('')}</tr></thead><tbody>
     ${['n','hn','pre','g1','g2'].map((k,i)=>`<tr><th style="text-align:left">${rows[i][0]}</th>${Object.keys(BPTH).map(t=>`<td data-t="${t}" data-k="${k}">${cell(t,k)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
     <p class="note">Tiền THA HAPK là 130–139 và/hoặc 80–89; THA tâm thu đơn độc: HATT ≥140 và HATTr &lt;90 ${V('Bảng 3.2','13')}.</p></div></div>
-  <div class="panel stack"><div class="row" style="justify-content:space-between"><h3>Lưu đồ chẩn đoán ${V('Hình 3.1','13')}</h3>${FIG('VSH26','Hình 3.1','13')}</div><div class="algo">
+  <div class="panel stack"><h3>Lưu đồ chẩn đoán ${V('Hình 3.1','13')}</h3><div class="algo">
    <div class="ab r">HAPK ≥180 và/hoặc ≥110–120 kèm tổn thương cơ quan đích đang tiến triển → <a href="#/tha/cap-cuu">THA cấp cứu</a></div>
    <div class="ab y">HAPK ≥130/80 → xác nhận</div>
    <div class="grid2"><div class="ab n"><b>Cơ bản:</b> đo HAPK lặp lại nhiều lần khám. &lt;130/80: bình thường/bình thường cao; 130–139/80–89: tiền THA; ≥140/90: THA.</div>
@@ -343,7 +343,6 @@ PAGES['/tha/ke-don']={title:'Kê đơn THA',render(m){
    <li><b>Bậc 1: tiền THA nguy cơ cao, ĐTĐ, bệnh thận mạn, PREVENT ≥7,5% hoặc THA</b>Phối hợp 2 thuốc liều thấp: A + C, A + D, C + D (± B) ${B('I','A')}. THA độ 2 nguy cơ cao: 2 thuốc liều chuẩn ${B('I','B-R')} hoặc 3 thuốc liều thấp ${B('IIa','B-R')}</li>
    <li><b>Bậc 2 (sau 1–3 tháng chưa đạt)</b>A + C + D ${B('I','A')}</li>
    <li><b>Bậc 3: THA kháng trị</b>Chuyển chuyên khoa; thêm spironolactone/ASI hoặc thuốc khác → <a href="#/tha/khang-tri">THA kháng trị</a></li></ol>
-   <div class="row">${FIG('VSH26','Hình 10.2','57')}${FIG('VSH26','Hình 10.3','59')}${FIG('VSH26','Bảng 10.5','60')}</div>
    <p class="note">Ưu tiên viên phối hợp cố định ở mọi bậc; không dung nạp thuốc nhóm I có thể dùng ASI ${B('IIb','B-R')}.</p></div>
   <div class="panel stack"><h3>Chọn thuốc theo bệnh nhân ${V('Bảng 10.5','60')} ${V('Hình 10.3','59')}</h3><div class="grid2">
    ${Object.entries(DCLASS).map(([k,v])=>`<div class="rxcard"><h3>${k} · ${v.n}</h3><p class="small"><b>Ưu tiên:</b> ${v.ind.map(x=>`<span class="chip good">${x}</span>`).join('')}</p>${v.ci.length?`<p class="small"><b>Chống chỉ định:</b> ${v.ci.map(x=>`<span class="chip bad">${x}</span>`).join('')}</p>`:''}<p class="small"><b>Thận trọng:</b> ${v.caut.map(x=>`<span class="chip">${x}</span>`).join('')}</p></div>`).join('')}</div>
@@ -387,7 +386,6 @@ PAGES['/tha/khang-tri']={title:'THA kháng trị',render(m){
    <div class="panel stack"><h3>Thuốc/chất làm tăng HA ${V('Bảng 13.1','108–109')}</h3><div class="checks" id="r-press">${PRESSOR.map((p,i)=>`<label><input type="checkbox" data-i="${i}"> ${p}</label>`).join('')}</div></div>
   </div><div class="stack" id="rh-out" aria-live="polite"></div></div>
   <div class="panel stack"><h3>Xét nghiệm ${V('Bảng 13.2','110')}</h3><div class="grid2"><div><b>Cơ bản</b><ul class="plain"><li>Bệnh sử, khám; chức năng thận, gan; công thức máu; canxi; TSH</li><li>Tổng phân tích nước tiểu; ECG; siêu âm thận</li><li>Loại trừ ngưng thở khi ngủ</li></ul></div><div><b>Nâng cao</b><ul class="plain"><li>Renin, aldosterone; metanephrine máu/nước tiểu</li><li>UACR/PCR; natri, kali niệu 24 giờ</li><li>Cortisol, nghiệm pháp ức chế dexamethasone</li><li>CT/MRI tuyến thượng thận; MRA/CTA mạch thận</li></ul></div></div></div>
-  <div class="row">${FIG('VSH26','Hình 13.2','111')}${FIG('VSH26','Bảng 13.1','108')}</div>
   ${box('Khuyến cáo THA kháng trị','13.3')}${box('Điều trị bằng dụng cụ (triệt phá thần kinh giao cảm thận)','14.1')}`;
   const save=persist('tha-rh',$('rh-form'));
   const draw=()=>{save();
@@ -429,7 +427,7 @@ PAGES['/tha/cap-cuu']={title:'THA cấp cứu',render(m){
     <div id="e-isch" class="checks" hidden><label><input type="radio" name="e-rep" value="lysis" checked> Có tiêu sợi huyết / lấy huyết khối</label><label><input type="radio" name="e-rep" value="no"> Không tái tưới máu</label></div></div>
    <div class="stack" id="em-out" aria-live="polite"></div></div>
   <div class="panel stack"><h3>Thuốc truyền tĩnh mạch ${V('Bảng 16.2','141–142')}</h3><div style="overflow-x:auto"><table class="bpgrid"><thead><tr><th>Thuốc</th><th>Liều</th><th id="iv-wh">Theo cân nặng</th><th>Lưu ý</th></tr></thead><tbody id="iv-tb"></tbody></table></div><p class="note">Cột “theo cân nặng” chỉ đổi đơn vị theo cân nặng đã nhập; pha loãng và tốc độ bơm theo quy trình của đơn vị.</p></div>
-  <div class="row">${FIG('VSH26','Hình 16.1','143')}${FIG('VSH26','Bảng 16.2','141')}</div><div class="panel stack"><h3>Nguyên tắc chung ${V('Phần XVI','140')}</h3><ul class="plain"><li>Nhập ICU/đơn vị theo dõi sát; ưu tiên thuốc truyền TM, chỉnh liều được.</li><li>Giảm MAP ≤25% trong giờ đầu; nếu ổn, đưa HA về &lt;160/100 trong 2–6 giờ, rồi HATT 130–140 trong 24–48 giờ. Tránh giảm MAP &gt;50% (thiếu máu não, thận, vành).</li><li>Labetalol và nicardipine là lựa chọn hàng đầu cho đa số tình huống.</li><li>U tủy thượng thận: phentolamine trước, không dùng chẹn beta đơn độc. Cocaine/amphetamine: benzodiazepine trước. Hạn chế nifedipine tác dụng ngắn.</li></ul></div>`;
+  <div class="panel stack"><h3>Nguyên tắc chung ${V('Phần XVI','140')}</h3><ul class="plain"><li>Nhập ICU/đơn vị theo dõi sát; ưu tiên thuốc truyền TM, chỉnh liều được.</li><li>Giảm MAP ≤25% trong giờ đầu; nếu ổn, đưa HA về &lt;160/100 trong 2–6 giờ, rồi HATT 130–140 trong 24–48 giờ. Tránh giảm MAP &gt;50% (thiếu máu não, thận, vành).</li><li>Labetalol và nicardipine là lựa chọn hàng đầu cho đa số tình huống.</li><li>U tủy thượng thận: phentolamine trước, không dùng chẹn beta đơn độc. Cocaine/amphetamine: benzodiazepine trước. Hạn chế nifedipine tác dụng ngắn.</li></ul></div>`;
   const save=persist('tha-em',$('em-form'));
   const fmt=x=>x>=10?Math.round(x):Math.round(x*10)/10;
   const draw=()=>{save();
@@ -493,7 +491,7 @@ PAGES['/tha/dac-biet']={title:'Đối tượng đặc biệt',render(m){
   `<div class="grid2"><div class="panel stack"><h3>Người cao tuổi: mục tiêu theo CFS ${V('Hình 15.1','130')}</h3>
     <label class="field"><span>Thang suy yếu lâm sàng: <b id="cfs-l"></b></span><input type="range" id="cfs" min="1" max="9" value="3"></label>
     <label class="field"><span>Tuổi</span><input type="number" id="el-age" value="82"></label>
-    <div id="cfs-out" aria-live="polite"></div><div>${FIG('VSH26','Hình 15.1','130')}</div>
+    <div id="cfs-out" aria-live="polite"></div>
     <p class="note">Suy yếu: CFS ≥5 hoặc FRAIL ≥3; đánh giá ở mọi người ≥75 tuổi ${T('11.2')} ${V('Bảng 15.5','128')}.</p></div>
    <div class="panel stack"><h3>Trẻ em và vị thành niên ${V('Bảng 15.8','135')}</h3><div class="form">
     <label class="field"><span>Tuổi</span><input type="number" id="ch-age" value="12" min="3" max="17"></label>

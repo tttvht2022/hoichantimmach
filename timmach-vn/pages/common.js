@@ -40,16 +40,8 @@ PAGES['/tim']={title:'Tìm khuyến cáo',render(m){
 
 PAGES['/nguon']={title:'Nguồn',render(m){
   m.innerHTML=head('Tài liệu gốc','Nguồn và cách trích dẫn','Số trang trong nút trích dẫn là số trang tạp chí in (riêng VSH/VNHA 2026 là số trang in của tài liệu). “Rec. n” là Recommendation Table số n; “§” là mục; “Hình”, “Bảng” là Figure, Table của văn bản gốc.')+
-  `<div class="stack">${Object.entries(REFS).map(([k,r])=>`<div class="panel stack"><span class="who ${r.cls}" style="align-self:flex-start">${r.short}</span><p>${r.full}</p><p class="note">${r.note}</p>${r.doi?`<p><a href="https://doi.org/${r.doi}" target="_blank" rel="noopener">doi:${r.doi}</a></p>`:''}${r.pdf?`<div class="row" data-pdfrow="${k}"><span class="note">Đang kiểm tra file PDF…</span></div>`:''}</div>`).join('')}
-  <div class="panel stack"><h3>Xem hình, bảng nguyên bản</h3><p class="small">Mỗi nút trích dẫn có nút <b>Xem trang gốc</b>: app mở nguyên trang chứa hình/bảng trong file PDF guideline do bạn nạp, không cắt, không chỉnh sửa. App không đăng lại hình của nhà xuất bản; file của bạn chỉ lưu trong trình duyệt trên thiết bị này.</p></div>
+  `<div class="stack">${Object.entries(REFS).map(([k,r])=>`<div class="panel stack"><span class="who ${r.cls}" style="align-self:flex-start">${r.short}</span><p>${r.full}</p><p class="note">${r.note}</p>${r.doi?`<p><a href="https://doi.org/${r.doi}" target="_blank" rel="noopener">doi:${r.doi}</a></p>`:''}</div>`).join('')}
   <div class="panel stack"><h3>Lưu ý ngoài các văn bản trên</h3><p class="small">GLP-1 RA: hướng dẫn đa hội năm 2024 (ASA, AGA, ASMBS, ISPOR, SAGES) đã nới lỏng so với đồng thuận ASA 2023 mà ACC/AHA dẫn; thống nhất với khoa gây mê tại bệnh viện.</p></div></div>`;
-  const rows=()=>document.querySelectorAll('[data-pdfrow]').forEach(async el=>{const k=el.dataset.pdfrow,f=await PDFV.get(k);
-    el.innerHTML=f?`<span class="cb c1">Đã nạp PDF</span><span class="note">${escH(f.name)} · ${(f.size/1048576).toFixed(1)} MB</span><button class="ic" data-pdf="${k}" data-pg="1">Mở</button><button class="ic" data-del="${k}">Gỡ file</button>`
-      :`<span class="cb cv">Chưa nạp PDF</span><button class="ic" data-pick="${k}">Chọn file PDF…</button>`});
-  rows();
-  m.onclick=async e=>{const d=e.target.closest('[data-del]'),p=e.target.closest('[data-pick]');
-    if(d){await PDFV.del(d.dataset.del);rows()}
-    if(p){PDFV.pick(p.dataset.pick,1,'');const t=setInterval(()=>{if($('modal').hidden){clearInterval(t);rows()}},600)}};
 }};
 PAGES['/gioi-thieu']={title:'Giới thiệu',render(m){
   m.innerHTML=head('Về app','Giới thiệu','Hội Chẩn Tim là phiên bản tiếng Việt, lấy cảm hứng từ cách trình bày của gdmt.org, cardioob.org và troponin.org: lộ trình theo bước, công cụ tương tác, và trích dẫn ở mọi khuyến cáo.')+

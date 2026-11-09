@@ -6,7 +6,7 @@ Sổ tay hội chẩn tim mạch tiếng Việt, có tương tác:
 - **Tăng huyết áp**: Khuyến cáo VSH/VNHA 2026 (lộ trình 5Đ, trợ lý THA: phân độ → nguy cơ Hình 7.2 → khởi trị → mục tiêu → phác đồ Hình 10.2; chẩn đoán và kiểu hình; kiểm tra phối hợp thuốc; THA kháng trị; THA cấp cứu kèm liều truyền theo cân nặng; bệnh đồng mắc; đối tượng đặc biệt; lối sống; liều thuốc; 266 khuyến cáo).
 - **Tim mạch – Thai kỳ**: ESC 2025 (mWHO 2.0 + CARPREG II, 9 thuật toán cấp cứu, thuốc thai kỳ/cho bú, van cơ học + liều LMWH, động mạch chủ, THA/tiền sản giật, kế hoạch sinh, hậu sản, 204 khuyến cáo).
 
-Mọi khuyến cáo có class, mức bằng chứng và nút trích dẫn (tên guideline, bảng/hình/mục, số trang, DOI). Nút **Xem trang gốc** hiển thị nguyên trang hình/bảng từ file PDF guideline bạn nạp vào trình duyệt; app không đăng lại hình của nhà xuất bản.
+Mọi khuyến cáo có class, mức bằng chứng và nút trích dẫn (tên guideline, bảng/hình/mục, số trang tạp chí, DOI).
 
 Chỉ dùng cho học tập; chưa được thẩm định để dùng lâm sàng.
 
@@ -46,8 +46,6 @@ index.html          khung trang, thứ tự nạp script
 vercel.json         header bảo mật cơ bản
 assets/style.css    giao diện (sáng/tối, cỡ chữ)
 assets/core.js      router (#/…), trích dẫn, modal, cài đặt
-assets/pdfview.js   trình xem trang gốc: mở đúng trang hình/bảng trong file PDF người dùng tự nạp (lưu IndexedDB)
-assets/vendor/pdfjs pdf.js 3.11.174 (Mozilla, Apache-2.0) tự lưu trữ, không phụ thuộc CDN
 data/refs.js        6 tài liệu gốc (DOI, ghi chú)
 data/periop.js      dữ liệu tiền phẫu + bản đồ trích dẫn từng chủ đề
 data/tha.js         khuyến cáo VSH/VNHA 2026 (mảng TR), Hình 7.2, Bảng 4.2, 10.5, 10.7, 13.1, 16.2, Hình 16.1, Bảng PL5
